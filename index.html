@@ -2,31 +2,70 @@
   <head>
     <title>Draggable Component</title>
     <meta lang="ja">
+    <style type="text/css">
+      #box {
+        width: 300px;
+        height: 500px;
+        background: whitesmoke;
+        padding: 20px 10px;
+        border-radius: 10px;
+        position: relative;
+      }
+      #item1 {
+        text-align: center;
+        width: 80%;
+        background: orange;
+        padding: 10px 10px;
+        border-radius: 10px;
+        top: 200px;
+        left: 20px;
+        position: absolute;
+      }
+      #drag-box {
+        text-align: center;
+        width: 80%;
+        height: 50px;
+        margin: 20px auto;
+        background: limegreen;
+        padding: 10px 10px;
+        border-radius: 10px;
+      }
+    </style>
   </head>
   <body>
-    <div 
-      id="box1" 
-      draggable="true" 
-      ondragstart="dragEvent(event);"
-      ondragend="dragEndEvent(event);"
-    >
-      Draggable
+    <div id="box">
+      <div 
+        id="item1" 
+        draggable="true"
+      >
+        Draggable
+      </div>
+      <div id="drag-box">
+        DragBox
+      </div>
     </div>
-    <div id="box2">Box</div>
   </body>
   <script type="text/javascript">
-    box1 = document.getElementById('box1');
+    var item1 = document.getElementById('item1');
+    console.log(item1);
+    item1.ondragstart = function(e) {
+      document.addEventListener("mousemove",onMouseMove);
+      console.log('タップ');
+    }
+    item1.onmouseup = function(e) {
+      console.log('タップエンド');
+      document.removeEventListener("mousemove",onMouseMove);
+    }
     function dragEvent(e) {
-      client = e.target.getBoundingClientRect();
-      console.log(client);
       e.target.innerHTML = 'Now Dragginng';
     }
-    function dragEndEvent(e) {
-      client = e.target.getBoundingClientRect();
-      client.x = 30;
-      client.y = 30;
-      console.log(client);
-      e.target.innerHTML = 'Draggable';
+    function onMouseMove(event) {
+      x = event.clientX;
+      y = event.clientY;
+      var width = item1.offsetWidth;
+      var height = item1.offsetHeight;
+      item1.style.top = (y-height/2) + "px";
+      item1.style.left = (x-width/2) + "px";
     }
   </script>
 </html>
