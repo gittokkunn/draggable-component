@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Draggable Component</title>
+    <meta lang="ja">
+  </head>
+  <body>
+    <div 
+      id="box1" 
+      draggable="true" 
+      ondragstart="dragEvent(event);"
+      ondragend="dragEndEvent(event);"
+    >
+      Draggable
+    </div>
+    <div id="box2">Box</div>
+  </body>
+  <script type="text/javascript">
+    box1 = document.getElementById('box1');
+    function dragEvent(e) {
+      client = e.target.getBoundingClientRect();
+      console.log(client);
+      e.target.innerHTML = 'Now Dragginng';
+    }
+    function dragEndEvent(e) {
+      client = e.target.getBoundingClientRect();
+      client.x = 30;
+      client.y = 30;
+      console.log(client);
+      e.target.innerHTML = 'Draggable';
+    }
+  </script>
+</html>
